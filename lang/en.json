@@ -1,0 +1,24 @@
+var languageData = {
+    "menus" : [
+        {
+            "label"  : "Solo",
+            "link"   : "mod/solo.html",
+            "caption": "Play alone like a champ' !"
+        },
+        {
+            "label"  : "Foo",
+            "link"   : "#",
+            "caption": "Foo description !"
+        },
+        {
+            "label"  : "Bar",
+            "link"   : "#",
+            "caption": "Bar description !"        
+        },
+        {
+            "label"  : "Baz",
+            "link"   : "#",
+            "caption": "Baz description !"
+        }
+    ]
+}

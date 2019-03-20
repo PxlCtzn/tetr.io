@@ -1,0 +1,22 @@
+ul#menu{
+    list-style: none;
+}
+
+.menu-item{
+    border : 0.2em solid var(--color-grey);
+    margin-bottom: 5em;
+    background: var(--color-red);
+}
+
+.menu-item:hover{
+    cursor: pointer;
+}
+
+.menu-item-link{
+    text-decoration: none;
+    font-size: 2em;
+}
+
+.menu-item-caption{
+    color : var(--color-orange);
+}

@@ -1,0 +1,17 @@
+:root{
+    --color-white:  #FFF;
+    --color-black:  #151515;
+    --color-red:    #ac4142;
+    --color-orange: #f4bf75;
+    --color-grey:   #505050;
+}
+
+body{
+    background-color: var(--color-black);
+    color:      var(--color-white);
+    font-family: sans-serif;
+}
+
+h1{
+    text-align: center;
+}
