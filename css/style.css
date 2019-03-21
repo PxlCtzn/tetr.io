@@ -1,4 +1,6 @@
 :root{
+    margin : 0;
+    padding: 0;
     --color-white:  #FFF;
     --color-black:  #151515;
     --color-red:    #ac4142;

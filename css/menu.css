@@ -5,16 +5,19 @@ ul#menu{
 .menu-item{
     border : 0.2em solid var(--color-grey);
     margin-bottom: 5em;
-    background: var(--color-red);
+    /* background: var(--color-red); */
 }
 
 .menu-item:hover{
     cursor: pointer;
+    background-color: var(--color-grey);
+    border : 0.2em solid var(--color-white);
+    font-weight: bold;
 }
 
 .menu-item-link{
     text-decoration: none;
-    font-size: 2em;
+    font-size:2em;
 }
 
 .menu-item-caption{
