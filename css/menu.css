@@ -1,15 +1,14 @@
 ul#menu{
     list-style: none;
-    margin :0px;
-    padding:0px;
+    margin :0;
+    padding:0;
 }
 
 .menu-item{
     border : 0.2em solid var(--color-grey);
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
+    margin: 2em;
     padding: 1em;
+    border-radius: 2.5em;
 }
 
 .menu-item:hover{
