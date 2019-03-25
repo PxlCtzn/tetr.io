@@ -1,0 +1,9 @@
+var configKeyboard = {
+    "DOWN":  40,
+    "LEFT":  37,
+    "RIGHT": 39,
+    "ROTATE_CLOCKWISE": 69,
+    "ROTATE_COUNTER_CLOCKWISE": 65,
+    "SWAP": 38,
+    "PAUSE": 80
+};

@@ -2,9 +2,45 @@
 <html lang="en">
     <head>
         <title>Tetr.io Solo Mode</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/solo.css">
+        <script type="text/javascript" language="javascript" src="../js/game/controllers/keyboard.json"></script>
+        <script type="text/javascript" language="javascript" src="../js/game/controllers/keyboard.json"></script>
     </head>
     <body>
         <h1>Tetr.io</h1>
         <h2>Solo mode</h2>
+
+        <p id="level">
+            <b class="label">Level</b>
+            <span class="value"></span>
+        </p>
+        <p id="speed">
+            <b class="label">Speed</b>
+            <span class="value"></span>
+        </p>
+        <p id="score">
+            <b class="label">Score</b>
+            <span class="value"></span>
+        </p>
+
+        <canvas id="playfield">
+        </canvas>
+
+        <canvas id="hold">
+        </canvas>
+
+        <canvas id="preview">
+        </canvas>
+        <script type="text/javascript" language="javascript" src="../js/game/controllers.js"></script>
+
+        <script type="text/javascript" language="javascript" src="../js/game/PlayfieldStyle.js"></script>
+        <script type="text/javascript" language="javascript" src="../js/game/Piece.js"></script>
+        <script type="text/javascript" language="javascript" src="../js/game/Playfield.js"></script>
+        <script type="text/javascript" language="javascript" src="../js/game/Randomizer/BagRandomizer.js"></script>
+
+        <script type="text/javascript" language="javascript" src="../js/game/mods/Mod.js"></script>
+        <script type="text/javascript" language="javascript" src="../js/game/mods/Solo.js"></script>
+        <script type="text/javascript" language="javascript" src="../js/game/solo.js"></script>
     </body>
 </html>
