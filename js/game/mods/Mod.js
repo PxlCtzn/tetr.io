@@ -16,20 +16,25 @@ class Mod{
 
     }
 
-    __drawMatrix(matrix, offset){
+    __drawMatrix(matrix, offset={x: 0, y: 0}, renderEmpty = true){
         matrix.forEach((row, y) => { // Foreach row
             row.forEach((value, x) => { // and Foreach column
-                this.__drawCell(
-                    (x+ offset.x), // x
-                    (y+offset.y),  // y
-                    matrix[y][x]
-                );
+                if( (0 !== value) ||
+                    (0 === value && renderEmpty)
+                )
+                {
+                    this.__drawCell(
+                        (x+ offset.x), // x
+                        (y+offset.y),  // y
+                        value
+                    );
+                }
             });
         });
     }
     
     __drawCell(x, y, value) {
-        this.context.fillStyle = (0 === value) ? this.styles.backgroundColor: this.styles.piecesColors[value];
+        this.context.fillStyle = value === 0 ? this.styles.backgroundColor : this.styles.piecesColors[value];
         this.context.fillRect(
                 x*this.styles.cellSize, y*this.styles.cellSize, // (X, Y) Origin
                 this.styles.cellSize, // Height

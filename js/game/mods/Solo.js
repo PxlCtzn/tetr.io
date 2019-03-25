@@ -21,6 +21,8 @@ class SoloMod extends Mod{
             }
 
             this.__draw();
+            this.__updateScore().__updateLevel().__updateSpeed();
+            
             requestAnimationFrame(__loop);
             
         };
@@ -30,20 +32,23 @@ class SoloMod extends Mod{
 
     __updateScore(){
         document.querySelector("p#score > span.value").textContent = this.score;
+        return this;
     }
 
     __updateLevel(){
         document.querySelector("p#level > span.value").textContent = this.level;
+        return this;
     }
 
     __updateSpeed(){
         document.querySelector("p#speed > span.value").textContent = this.speed/1000+" G";
+        return this;
     }
 
     __draw(){
         
-        super.__drawMatrix(this.playfield.matrix, {x: 0, y: 0});
-        super.__drawMatrix(this.piece.matrix, this.piece.pos);
+        super.__drawMatrix(this.playfield.matrix);
+        super.__drawMatrix(this.piece.matrix, this.piece.pos, false);
     }
 
 }
