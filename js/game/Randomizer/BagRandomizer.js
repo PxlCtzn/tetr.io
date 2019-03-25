@@ -1,38 +1,54 @@
 class BagRandomizer{
+
+    /**
+     * Create a new Bag Randomizer
+     * @param {Array} pieces_availables 
+     * @param {Number} pieces_occurrence 
+     */
     constructor(pieces_availables, pieces_occurrence = 1){
-        this.pieces_availables =  pieces_availables;
-        this.pieces_occurrence = pieces_occurrence;
-        
-        this.__bag = this.__generateBag();
-    }
-
-    getPieceName(){
-        if (0 === this.__bag.length)
-            this.__bag = this.__generateBag();
-
-        return this.__bag.shift();
-    }
-    __generateBag(){
-        let bag = [].concat(...Array.from({length: this.pieces_occurrence}, () => this.pieces_availables));
-        return this.__shuffleBag(bag);
-    }
-
-    __shuffleBag(bag){
-        var currentIndex = bag.length, temporaryValue, randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-      
-          // Pick a remaining element...
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-      
-          // And swap it with the current element.
-          temporaryValue = bag[currentIndex];
-          bag[currentIndex] = bag[randomIndex];
-          bag[randomIndex] = temporaryValue;
+        if(pieces_occurrence <= 0)
+        {
+            pieces_occurrence = 1;
         }
-      
-        return bag;
+        else if(pieces_occurrence === +pieces_occurrence && pieces_occurrence !== (pieces_occurrence|0)) // Testing if the number is a float
+        {
+            pieces_occurrence = Math.round(pieces_occurrence);
+        }
+
+        this.bag = [];
+        this.pieces_availables = pieces_availables;
+        this.pieces_occurrence = pieces_occurrence;
+
+        this.__generateBag();
+    }
+
+    /**
+     * Retrieves a piece from the bag
+     */
+    getPiece(){
+        if (0 === this.bag.length)
+            this.__generateBag();
+
+        let piece_name = this.bag.shift();
+        return new Piece(piece_name);
+    }
+
+    /**
+     * Generate a new Bag
+     */
+    __generateBag(){
+        let bag = Array();
+        let occurenceIndex = 0;
+        while(occurenceIndex < this.pieces_occurrence){
+            bag = bag.concat(this.pieces_availables);
+            occurenceIndex++;
+        }
+        
+        for (let i = bag.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [bag[i], bag[j]] = [bag[j], bag[i]];
+        }
+
+        this.bag = bag;
     }
 }

@@ -16,12 +16,11 @@ class SoloMod extends Mod{
 
             if(this.dropCounter > this.speed)
             {
-                this.dropCounter = 0;
                 this.pieceDrop();
             }
 
             this.__draw();
-            this.__updateScore().__updateLevel().__updateSpeed();
+            this.__updateScore().__updateLevel().__updateSpeed().__updatePreview()  ;
             
             requestAnimationFrame(__loop);
             
@@ -45,10 +44,24 @@ class SoloMod extends Mod{
         return this;
     }
 
+    __updatePreview(){
+        let preview = document.getElementById("preview");
+        preview.innerHTML = ""; 
+        this.nextPieces.forEach((piece) => {
+            let canvas = document.createElement("canvas");
+            canvas.height = piece.matrix.length    * this.styles.cellSize;
+            canvas.width  = piece.matrix[0].length * this.styles.cellSize;
+            preview.appendChild(canvas);
+
+            super.__drawMatrix(canvas.getContext("2d"), piece.matrix)
+        })
+        
+
+    }
     __draw(){
         
-        super.__drawMatrix(this.playfield.matrix);
-        super.__drawMatrix(this.piece.matrix, this.piece.pos, false);
+        super.__drawMatrix(this.context, this.playfield.matrix);
+        super.__drawMatrix(this.context, this.piece.matrix, this.piece.pos, false);
     }
 
 }

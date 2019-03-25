@@ -14,12 +14,16 @@ class Piece{
 
     rotateClockwise()
     {
+        if(this.piece_name === "o" || this.piece_name === "O")
+            return;
         this.__rotate();
         this.matrix.forEach(row => row.reverse());
     }
 
     rotateCounterClockwise()
     {
+        if(this.piece_name === "o" || this.piece_name === "O")
+            return;
         this.__rotate();
         this.matrix.reverse();
     }
@@ -42,8 +46,9 @@ class Piece{
             case "o":
             case "O":
                 return [
-                    [2, 2],
-                    [2, 2],
+                    [0, 2, 2, 0],
+                    [0, 2, 2, 0],
+                    [0, 0, 0, 0],
                 ];
             case "i":
             case "I":

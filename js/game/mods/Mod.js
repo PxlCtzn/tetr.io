@@ -10,13 +10,21 @@ class Mod{
         this.score = 0;
         this.level = 1;
         this.speed = Math.pow( (0.8-((this.level-1)*0.007)) , (this.level-1) )*1500;
+        
         this.randomizer = new BagRandomizer(this.pieces_available, 1);
-        this.piece = this.__getNewPiece();
+        this.previewCount = 3;
+        this.nextPieces = Array(this.previewCount);
+        for(let p =0; p < this.previewCount; p++)
+        {
+            this.nextPieces[p] = this.randomizer.getPiece();
+        }
+        this.piece = this.__getNextPiece();
+
         this.updateCanvasSize();
 
     }
 
-    __drawMatrix(matrix, offset={x: 0, y: 0}, renderEmpty = true){
+    __drawMatrix(context, matrix, offset={x: 0, y: 0}, renderEmpty = true){
         matrix.forEach((row, y) => { // Foreach row
             row.forEach((value, x) => { // and Foreach column
                 if( (0 !== value) ||
@@ -24,6 +32,7 @@ class Mod{
                 )
                 {
                     this.__drawCell(
+                        context,
                         (x+ offset.x), // x
                         (y+offset.y),  // y
                         value
@@ -33,15 +42,15 @@ class Mod{
         });
     }
     
-    __drawCell(x, y, value) {
-        this.context.fillStyle = value === 0 ? this.styles.backgroundColor : this.styles.piecesColors[value];
-        this.context.fillRect(
+    __drawCell(context, x, y, value) {
+        context.fillStyle = value === 0 ? this.styles.backgroundColor : this.styles.piecesColors[value];
+        context.fillRect(
                 x*this.styles.cellSize, y*this.styles.cellSize, // (X, Y) Origin
                 this.styles.cellSize, // Height
                 this.styles.cellSize  // Width
         );
-        this.context.strokeStyle = this.styles.cellStrokeColor;
-        this.context.strokeRect(x*this.styles.cellSize, y*this.styles.cellSize,
+        context.strokeStyle = this.styles.cellStrokeColor;
+        context.strokeRect(x*this.styles.cellSize, y*this.styles.cellSize,
             this.styles.cellSize,
             this.styles.cellSize);
     }
@@ -49,22 +58,31 @@ class Mod{
     movePieceLeft()
     {
         this.piece.pos.x--;
+        if(this.playfield.collide(this.piece))
+        {
+            this.piece.pos.x++;
+        }
     }
     
     movePieceRight()
     {
         this.piece.pos.x++;
+        if(this.playfield.collide(this.piece))
+        {
+            this.piece.pos.x--;
+        }
     }
 
     pieceDrop(){
+        this.dropCounter = 0;
+
         this.piece.pos.y++;
+
         if(this.playfield.collide(this.piece))
         {
             this.piece.pos.y--;
             this.playfield.merge(this.piece);
-            this.piece = this.__getNewPiece();
         }
-        this.dropCounter = 0;
 
     }
     rotatePieceClockwise()
@@ -77,12 +95,14 @@ class Mod{
         this.piece.rotateCounterClockwise();
     }
 
-    __getNewPiece()
-    {
-        console.log("Getting new piece.");
-        let piece = new Piece(this.randomizer.getPieceName(), this.playfield.cellSize);
-        piece.pos.x = (this.playfield.column / 2 | 0) - (piece.matrix[0].length / 2 | 0);
-        console.log(piece);
+    /**
+     * Removes the first piece of next ones
+     * and push a new piece from one given by the randomizer  
+     */
+    __getNextPiece()
+    {       
+        let piece = this.nextPieces.shift();
+        this.nextPieces.push(this.randomizer.getPiece());
         return piece;
     }
 
