@@ -5,20 +5,19 @@ class SoloMod extends Mod{
 
         this.lastTime = 0;
         this.dropCounter = 0;
-        
-        this.__draw();
 
         const __loop = (time = 0) => {
             const deltaTime = time - this.lastTime;
-            this.lastTime = time;
 
             this.dropCounter += deltaTime;
 
-            if(this.dropCounter > this.speed)
+            if(this.dropCounter >= this.speed)
             {
-                this.pieceDrop();
+                super.pieceDrop();
             }
 
+            this.lastTime = time;
+            
             this.__draw();
             this.__updateScore().__updateLevel().__updateSpeed().__updatePreview()  ;
             

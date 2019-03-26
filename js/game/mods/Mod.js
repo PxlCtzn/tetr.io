@@ -5,7 +5,7 @@ class Mod{
         this.context = this.canvas.getContext("2d");
 
         this.pieces_available  = ["z", "o", "i", "s", "j", "l", "t"];
-        this.playfield = new Playfield(12, 20);
+        this.playfield = new Playfield(10, 20);
         this.styles = new PlayfieldStyle();
         this.score = 0;
         this.level = 1;
@@ -82,6 +82,9 @@ class Mod{
         {
             this.piece.pos.y--;
             this.playfield.merge(this.piece);
+            this.piece = this.__getNextPiece();
+            this.score += this.playfield.sweep();
+            this.__updateScore();
         }
 
     }
@@ -103,6 +106,7 @@ class Mod{
     {       
         let piece = this.nextPieces.shift();
         this.nextPieces.push(this.randomizer.getPiece());
+        piece.pos.x = (this.playfield.column-piece.matrix.length) % 2 === 0 ? (this.playfield.column-piece.matrix.length)/2 : (this.playfield.column-piece.matrix.length-1)/2;
         return piece;
     }
 
@@ -110,4 +114,5 @@ class Mod{
         this.canvas.width = this.styles.cellSize * this.playfield.column;
         this.canvas.height = this.styles.cellSize * this.playfield.row;
     }
+    
 }
