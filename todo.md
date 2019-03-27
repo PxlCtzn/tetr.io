@@ -12,8 +12,9 @@
 - [ ] Combo
 - [ ] Level up
 - [ ] Point
-- [ ] Speed
+- [ ] Speed 
 - [ ] Pause
+- [ ] Hold
 
 ## Solo Mod
 
