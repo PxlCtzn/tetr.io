@@ -9,6 +9,8 @@ class Piece{
             x : 0,
             y : 0,
         };
+        this.width  = this.matrix[0].length; 
+        this.height = this.matrix.length;
     }
 
 
@@ -95,6 +97,40 @@ class Piece{
             for(var x =0; x < y; x++)
             {
                 [ this.matrix[x][y], this.matrix[y][x] ] = [ this.matrix[y][x], this.matrix[x][y] ];
+            }
+        }
+    }
+
+    /**
+     * Returns the current height (number of cell) of the piece
+     */
+    getHeight(){
+        let max_height = 0;
+        let current_height = 0;
+        for(let x = 0; x < this.width; x++)
+        {
+            current_height = 0;
+            for(let y = (this.height-1); y >= 0; y--)
+            {
+                if(0 !== this.matrix[y][x])
+                {
+                    current_height ++;
+                }
+            }
+            if(current_height > max_height){
+                max_height = current_height;
+            }
+        }
+        return max_height;
+    }
+
+    getFirstRowIndexContainingMinos(){
+        for(let y = 0; y < this.height; y++)
+        {
+            let sum = this.matrix[y].reduce((part, value) => part + value);
+            if( sum > 0)
+            {
+                return y;
             }
         }
     }

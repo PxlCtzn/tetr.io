@@ -8,7 +8,7 @@
 - [ ] Fix tetrominos spawning point
 - [ ] Wall Kick
 - [ ] Lock Mechanism
-- [ ] Ghost
+- [X] Ghost
 - [ ] Combo
 - [ ] Level up
 - [ ] Point

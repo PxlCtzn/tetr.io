@@ -21,6 +21,8 @@ class SoloMod extends Mod{
             this.__draw();
             this.__updateScore().__updateLevel().__updateSpeed().__updatePreview()  ;
             
+            this.__updateGhost();
+
             requestAnimationFrame(__loop);
             
         };
@@ -46,7 +48,7 @@ class SoloMod extends Mod{
     __updatePreview(){
         let preview = document.getElementById("preview");
         preview.innerHTML = ""; 
-        this.nextPieces.forEach((piece) => {
+        this.tetrominos_queue.forEach((piece) => {
             let canvas = document.createElement("canvas");
             canvas.height = piece.matrix.length    * this.styles.cellSize;
             canvas.width  = piece.matrix[0].length * this.styles.cellSize;
@@ -57,10 +59,11 @@ class SoloMod extends Mod{
         
 
     }
-    __draw(){
-        
+    __draw()
+    {    
         super.__drawMatrix(this.context, this.playfield.matrix);
-        super.__drawMatrix(this.context, this.piece.matrix, this.piece.pos, false);
+        super.__drawMatrix(this.context, this.tetromino.matrix, this.tetromino.pos, false);
+        super.__drawMatrix(this.context, this.ghost.matrix, this.ghost.pos, false, 0.2);
     }
 
 }

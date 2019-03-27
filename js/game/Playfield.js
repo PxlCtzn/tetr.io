@@ -2,7 +2,7 @@ class Playfield {
 
     /**
      * Creates an instance of Playfield.
-     * @param {number} [column=12]
+     * @param {number} [column=10]
      * @param {number} [row=20]
      * @memberof Playfield
      */
@@ -35,37 +35,37 @@ class Playfield {
     }
     
     merge(piece) {
-        console.log("merge");
         piece.matrix.forEach((row, y) => {
-            //console.log("Row#"+y+" : "+row);
             row.forEach((value, x) => {
-                //console.log("Row#"+y+" Column#"+x+" : "+value);
                 if(value !== 0){
-                    //console.log("Cell y:"+(y + piece.pos.y)+" x:"+(x + piece.pos.x)+" mise à jour");
                     this.matrix[(y + piece.pos.y)][(x + piece.pos.x)] = value;
                 }
             });
         });
     }
 
+    /**
+     * Sweep the playfield and returns the numbers of line cleared.
+     */
     sweep()
     {
         let rowCount = 1;
-        let score = 0;
+
         outer: for (let y = this.matrix.length - 1; y > 0; --y) {
             for (let x = 0; x < this.matrix[y].length; ++x) {
                 if (this.matrix[y][x] === 0) {
                     continue outer;
                 }
             }
-
+            
             const row = this.matrix.splice(y, 1)[0].fill(0);
             this.matrix.unshift(row);
             ++y;
 
-            score += rowCount * 10;
-            rowCount *= 2;
+            rowCount ++;
         }
-        return score;
-}
+        return rowCount;
+    }
+
+    
 }

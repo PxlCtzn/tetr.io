@@ -3,28 +3,31 @@ class Mod{
     constructor(canvas){
         this.canvas = canvas;
         this.context = this.canvas.getContext("2d");
-
-        this.pieces_available  = ["z", "o", "i", "s", "j", "l", "t"];
+        
+        this.tetrominos_available  = ["z", "o", "i", "s", "j", "l", "t"];
         this.playfield = new Playfield(10, 20);
         this.styles = new PlayfieldStyle();
         this.score = 0;
         this.level = 1;
         this.speed = Math.pow( (0.8-((this.level-1)*0.007)) , (this.level-1) )*1500;
         
-        this.randomizer = new BagRandomizer(this.pieces_available, 1);
+        this.randomizer = new BagRandomizer(this.tetrominos_available, 1);
         this.previewCount = 3;
-        this.nextPieces = Array(this.previewCount);
+        this.tetrominos_queue = Array(this.previewCount);
         for(let p =0; p < this.previewCount; p++)
         {
-            this.nextPieces[p] = this.randomizer.getPiece();
+            this.tetrominos_queue[p] = this.randomizer.getPiece();
         }
-        this.piece = this.__getNextPiece();
+    
+        this.spawnNextTetromino();
 
         this.updateCanvasSize();
 
     }
 
-    __drawMatrix(context, matrix, offset={x: 0, y: 0}, renderEmpty = true){
+    __drawMatrix(context, matrix, offset={x: 0, y: 0}, renderEmpty = true, alpha=1.0){
+        let previousAlpha = context.globalAlpha;
+        context.globalAlpha = alpha;
         matrix.forEach((row, y) => { // Foreach row
             row.forEach((value, x) => { // and Foreach column
                 if( (0 !== value) ||
@@ -40,6 +43,7 @@ class Mod{
                 }
             });
         });
+        context.globalAlpha = previousAlpha;
     }
     
     __drawCell(context, x, y, value) {
@@ -57,57 +61,63 @@ class Mod{
 
     movePieceLeft()
     {
-        this.piece.pos.x--;
-        if(this.playfield.collide(this.piece))
+        this.tetromino.pos.x--;
+        if(this.playfield.collide(this.tetromino))
         {
-            this.piece.pos.x++;
+            this.tetromino.pos.x++;
         }
+        this.__updateGhost();
     }
     
     movePieceRight()
     {
-        this.piece.pos.x++;
-        if(this.playfield.collide(this.piece))
+        this.tetromino.pos.x++;
+        if(this.playfield.collide(this.tetromino))
         {
-            this.piece.pos.x--;
+            this.tetromino.pos.x--;
         }
+        this.__updateGhost();
     }
 
     pieceDrop(){
         this.dropCounter = 0;
 
-        this.piece.pos.y++;
+        this.tetromino.pos.y++;
 
-        if(this.playfield.collide(this.piece))
+        if(this.playfield.collide(this.tetromino))
         {
-            this.piece.pos.y--;
-            this.playfield.merge(this.piece);
-            this.piece = this.__getNextPiece();
+            this.tetromino.pos.y--;
+            this.playfield.merge(this.tetromino);
+            this.spawnNextTetromino();
             this.score += this.playfield.sweep();
-            this.__updateScore();
         }
-
+        
     }
     rotatePieceClockwise()
     {
-        this.piece.rotateClockwise();
+        this.tetromino.rotateClockwise();
     }
 
     rotatePieceCounterClockwise()
     {
-        this.piece.rotateCounterClockwise();
+        this.tetromino.rotateCounterClockwise();
     }
 
     /**
      * Removes the first piece of next ones
      * and push a new piece from one given by the randomizer  
      */
-    __getNextPiece()
+    spawnNextTetromino()
     {       
-        let piece = this.nextPieces.shift();
-        this.nextPieces.push(this.randomizer.getPiece());
-        piece.pos.x = (this.playfield.column-piece.matrix.length) % 2 === 0 ? (this.playfield.column-piece.matrix.length)/2 : (this.playfield.column-piece.matrix.length-1)/2;
-        return piece;
+        this.tetromino = this.tetrominos_queue.shift();
+        this.tetrominos_queue.push(this.randomizer.getPiece());
+        this.centerTetromino();
+        this.createGhost();
+    }
+    
+    centerTetromino()
+    {
+        this.tetromino.pos.x = (this.playfield.column-this.tetromino.matrix.length) % 2 === 0 ? (this.playfield.column - this.tetromino.matrix.length)/2 : (this.playfield.column - this.tetromino.matrix.length-1)/2;
     }
 
     updateCanvasSize(){
@@ -115,4 +125,31 @@ class Mod{
         this.canvas.height = this.styles.cellSize * this.playfield.row;
     }
     
+    /**
+     * Create a ghost piece from the given piece.
+     * 
+     * @param {Piece} piece 
+     */
+    createGhost()
+    {
+        this.ghost = new Piece(this.tetromino.piece_name);
+    }
+
+    /**
+     * Updates the Ghost position.
+     */
+    __updateGhost(){
+        this.ghost.pos.x = this.tetromino.pos.x;
+        this.ghost.pos.y = this.playfield.row - this.tetromino.getHeight() - this.tetromino.getFirstRowIndexContainingMinos();
+        
+        this.ghost.matrix = this.tetromino.matrix;
+        
+        while(this.playfield.collide(this.ghost)){
+            this.ghost.pos.y--;
+            if(this.ghost.pos.y < 0) {
+                break;
+            }
+        }
+    }
+
 }
