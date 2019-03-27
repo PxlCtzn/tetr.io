@@ -23,6 +23,7 @@ class Mod{
 
         this.updateCanvasSize();
 
+        this.scores_tab = [null, 100, 300, 500, 800];
     }
 
     __drawMatrix(context, matrix, offset={x: 0, y: 0}, renderEmpty = true, alpha=1.0){
@@ -89,7 +90,12 @@ class Mod{
             this.tetromino.pos.y--;
             this.playfield.merge(this.tetromino);
             this.spawnNextTetromino();
-            this.score += this.playfield.sweep();
+            var lineCleared = this.playfield.sweep();
+
+            if(lineCleared > 0)
+            {
+                this.score += this.scores_tab[lineCleared]*this.level;
+            }
         }
         
     }

@@ -49,7 +49,7 @@ class Playfield {
      */
     sweep()
     {
-        let rowCount = 1;
+        let rowCount = 0;
 
         outer: for (let y = this.matrix.length - 1; y > 0; --y) {
             for (let x = 0; x < this.matrix[y].length; ++x) {
