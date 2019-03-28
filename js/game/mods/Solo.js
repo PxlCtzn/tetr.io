@@ -90,7 +90,7 @@ class SoloMod extends Mod{
             canvas.height = piece.matrix.length    * this.styles.cellSize;
             canvas.width  = piece.matrix[0].length * this.styles.cellSize;
             preview.appendChild(canvas);
-            super.__drawMatrix(canvas.getContext("2d"), piece.matrix);
+            super.__drawMatrix(canvas.getContext("2d"), piece.matrix, {x: 0, y:0}, false);
         });
         
 

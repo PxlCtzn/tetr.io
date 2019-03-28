@@ -1,3 +1,7 @@
+body{
+    align-items: center;
+    justify-content: center;
+}
 div#content{
     display:flex;
     flex-direction: row;
@@ -19,12 +23,23 @@ div#playfield{
 #stats {
     list-style: none;
 }
+#stats > li{
+    margin-bottom: 1.5em;
+}
+.stats-value{
+    text-align: right;
+    display: inline-block;
+    width: 100%;
+}
 
-#stats-score--label, #stats-timer--label, #stats-level--label, 
-#stats-speed--label, #stats-line--label, #stats-goal--label{
+.stats-label{
     font-weight: bold;
 }
 
-#preview > canvas:first-child{
-    content: "<h4>Queue</h4>";
+#preview-queue {
+    width: 160px;
+    text-align: center;
+    background: #123;
+    border-radius: 1em;
+    padding-top: 30px;
 }
