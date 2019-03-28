@@ -15,6 +15,8 @@
 - [ ] Speed 
 - [ ] Pause
 - [ ] Hold
+- [ ] Scoring
+- [X] Display timer
 
 ## Solo Mod
 

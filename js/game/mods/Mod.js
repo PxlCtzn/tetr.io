@@ -1,18 +1,25 @@
 class Mod{
 
     constructor(canvas){
+        this.stats = {
+            score : 0,
+            level : 1,
+            speed: 0,
+            lines : 0,
+            timer : 0,
+        };
+        
+        this.__computeSpeed();
+
         this.canvas = canvas;
         this.context = this.canvas.getContext("2d");
         
         this.tetrominos_available  = ["z", "o", "i", "s", "j", "l", "t"];
         this.playfield = new Playfield(10, 20);
         this.styles = new PlayfieldStyle();
-        this.score = 0;
-        this.level = 1;
-        this.speed = Math.pow( (0.8-((this.level-1)*0.007)) , (this.level-1) )*1500;
         
         this.randomizer = new BagRandomizer(this.tetrominos_available, 1);
-        this.previewCount = 3;
+        this.previewCount = 5;
         this.tetrominos_queue = Array(this.previewCount);
         for(let p =0; p < this.previewCount; p++)
         {
@@ -26,6 +33,9 @@ class Mod{
         this.scores_tab = [null, 100, 300, 500, 800];
     }
 
+    __computeSpeed(){
+        this.stats.speed = Math.pow( (0.8-((this.stats.level-1)*0.007)) , (this.stats.level-1) )*1000;
+    }
     __drawMatrix(context, matrix, offset={x: 0, y: 0}, renderEmpty = true, alpha=1.0){
         let previousAlpha = context.globalAlpha;
         context.globalAlpha = alpha;
@@ -81,6 +91,7 @@ class Mod{
     }
 
     pieceDrop(){
+        var lineCleared = 0;
         this.dropCounter = 0;
 
         this.tetromino.pos.y++;
@@ -90,11 +101,11 @@ class Mod{
             this.tetromino.pos.y--;
             this.playfield.merge(this.tetromino);
             this.spawnNextTetromino();
-            var lineCleared = this.playfield.sweep();
-
+            lineCleared = this.playfield.sweep();
+            this.stats.lines += lineCleared;
             if(lineCleared > 0)
             {
-                this.score += this.scores_tab[lineCleared]*this.level;
+                this.stats.score += this.scores_tab[lineCleared]*this.stats.level;
             }
         }
         
@@ -119,6 +130,7 @@ class Mod{
         this.tetrominos_queue.push(this.randomizer.getPiece());
         this.centerTetromino();
         this.createGhost();
+        this.__updatePreview();
     }
     
     centerTetromino()
@@ -146,16 +158,17 @@ class Mod{
      */
     __updateGhost(){
         this.ghost.pos.x = this.tetromino.pos.x;
-        this.ghost.pos.y = this.playfield.row - this.tetromino.getHeight() - this.tetromino.getFirstRowIndexContainingMinos();
+        this.ghost.pos.y = this.tetromino.pos.y;
         
         this.ghost.matrix = this.tetromino.matrix;
         
-        while(this.playfield.collide(this.ghost)){
-            this.ghost.pos.y--;
-            if(this.ghost.pos.y < 0) {
+        while(!this.playfield.collide(this.ghost)){
+            this.ghost.pos.y++;
+            if(this.ghost.pos.y >= this.playfield.row ) {
                 break;
             }
         }
+        this.ghost.pos.y--;
     }
 
 }

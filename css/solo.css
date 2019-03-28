@@ -1,3 +1,30 @@
-canvas#playfield{
-    margin: auto;
+div#content{
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+div#content-left, div#content-right{
+    flex: 0.2;
+}
+
+div#playfield{
+    flex: 0.8;
+}
+#playfield--canvas {
+    display: block;
+    margin: 0 auto;
+}
+
+#stats {
+    list-style: none;
+}
+
+#stats-score--label, #stats-timer--label, #stats-level--label, 
+#stats-speed--label, #stats-line--label, #stats-goal--label{
+    font-weight: bold;
+}
+
+#preview > canvas:first-child{
+    content: "<h4>Queue</h4>";
 }

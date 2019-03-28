@@ -11,24 +11,49 @@
         <h1>Tetr.io</h1>
         <h2>Solo mode</h2>
 
-        <p id="level">
-            <b class="label">Level</b>
-            <span class="value"></span>
-        </p>
-        <p id="speed">
-            <b class="label">Speed</b>
-            <span class="value"></span>
-        </p>
-        <p id="score">
-            <b class="label">Score</b>
-            <span class="value"></span>
-        </p>
-        <div id="tetr.io">
-            <canvas id="hold"></canvas>
-
-            <canvas id="playfield"></canvas>
-
-            <div id="preview"></div>
+        <div id="content">
+            <div id="content-left">
+                <h3>Hold</h3>
+                <canvas id="hold"></canvas>
+                <h3>Stats</h3>
+                <ul id="stats">
+                    <li id="stats-score">
+                        <span id="stats-score--label">Score</span>
+                        <span id="stats-score--value">0</span>
+                    </li>
+                    <li id="stats-timer">
+                        <span id="stats-timer--label">Time</span>
+                        <span id="stats-timer--value">00:00:00</span>
+                    </li>
+                    <li id="stats-level">
+                        <span id="stats-level--label">Level</span>
+                        <span id="stats-level--value">000</span>
+                    </li>
+                    <li id="stats-speed">
+                        <span id="stats-speed--label">Speed</span>
+                        <span id="stats-speed--value">000</span>
+                    </li>
+                    <li id="stats-line">
+                        <span id="stats-line--label">Lines</span>
+                        <span id="stats-line--value">000</span>
+                    </li>
+                    <li id="stats-goal">
+                        <span id="stats-goal--label">Goal</span>
+                        <span id="stats-goal--value">000</span>
+                    </li>
+                </ul>
+            </div>
+            <div id="playfield">
+                <canvas id="playfield--canvas"></canvas>
+            </div>
+            <div id="content-right">
+                <h3>Next</h3>
+                <div id="preview-next">
+                </div>
+                <h3>Queue</h3>
+                <div id="preview-queue">
+                </div>
+            </div>
         </div>
         <script type="text/javascript" language="javascript" src="../js/game/controllers.js"></script>
 
