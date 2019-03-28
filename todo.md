@@ -14,7 +14,7 @@
 - [ ] Point
 - [ ] Speed 
 - [ ] Pause
-- [ ] Hold
+- [X] Hold
 - [ ] Scoring
 - [X] Display timer
 

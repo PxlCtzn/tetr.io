@@ -29,7 +29,8 @@ class Mod{
         this.spawnNextTetromino();
 
         this.updateCanvasSize();
-
+        this.hold = null;
+        this.canHold = true;
         this.scores_tab = [null, 100, 300, 500, 800];
     }
 
@@ -90,7 +91,7 @@ class Mod{
         this.__updateGhost();
     }
 
-    pieceDrop(){
+    dropPiece(){
         var lineCleared = 0;
         this.dropCounter = 0;
 
@@ -109,6 +110,26 @@ class Mod{
             }
         }
         
+    }
+
+    holdPiece(){
+        if(!this.canHold)
+        {
+            return;
+        }
+
+        if(this.hold === null || this.hold === undefined)
+        {
+            this.hold = this.tetromino;
+            this.spawnNextTetromino();
+        }
+        else
+        {
+            [this.hold, this.tetromino] = [this.tetromino, this.hold];
+            this.tetromino.pos = this.hold.pos;
+        }
+        this.canHold = false;
+        this.__updateHold();
     }
     rotatePieceClockwise()
     {
@@ -131,6 +152,7 @@ class Mod{
         this.centerTetromino();
         this.createGhost();
         this.__updatePreview();
+        this.canHold = true;
     }
     
     centerTetromino()

@@ -16,7 +16,7 @@ class SoloMod extends Mod{
             if(this.dropCounter >= this.stats.speed)
             {
                 
-                super.pieceDrop();
+                super.dropPiece();
             }
 
             this.lastTime = time;
@@ -78,7 +78,13 @@ class SoloMod extends Mod{
         document.getElementById("preview-queue").innerHTML = "";
     }
 
-    
+    __updateHold()
+    {
+        let canvas = document.getElementById("hold");
+        let context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        super.__drawMatrix(context, this.hold.matrix, {x:0, y:0}, false);
+    }
 
     __updatePreview(){
         this.__clearPreviewNext();

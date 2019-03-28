@@ -12,7 +12,11 @@ const keyListener = (event) => {
         if (event.preventDefault)
             event.preventDefault();
 
-        game.pieceDrop();
+        game.dropPiece();
+    }
+    else if(configKeyboard.HOLD === event.keyCode)
+    {
+        game.holdPiece();
     }
     else if(configKeyboard.PAUSE === event.keyCode)
     {
