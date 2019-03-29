@@ -1,9 +1,10 @@
 var configKeyboard = {
-    "DOWN":  40,
-    "LEFT":  37,
-    "RIGHT": 39,
-    "ROTATE_CLOCKWISE": 69,
-    "ROTATE_COUNTER_CLOCKWISE": 65,
-    "HOLD": 38,
-    "PAUSE": 80
+    "LEFT":         "ArrowLeft",
+    "RIGHT":        "ArrowRight",
+    "SOFT_DROP":    "ArrowDown",
+    "HARD_DROP":    " ",
+    "ROTATE_CLOCKWISE": "x",
+    "ROTATE_COUNTERCLOCKWISE": "z",
+    "HOLD": "Shift",
+    "PAUSE": "Escape",
 };

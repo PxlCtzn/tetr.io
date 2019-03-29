@@ -3,6 +3,7 @@
     <head>
         <title>Tetr.io Solo Mode</title>
         <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/controller.css">
         <link rel="stylesheet" type="text/css" href="../css/solo.css">
         <script type="text/javascript" language="javascript" src="../js/game/controllers/keyboard.json"></script>
         <script type="text/javascript" language="javascript" src="../js/game/controllers/keyboard.json"></script>
@@ -40,6 +41,18 @@
                         <span id="stats-goal--label" class="stats-label">Goal</span>
                         <span id="stats-goal--value" class="stats-value">000</span>
                     </li>
+                </ul>
+                <h3>Controller</h3>
+                <label id="controller-select--label" for="controller-select">Controller type:</label>
+
+                <select id="controller-select">
+                    <option value="keyboard">Keyboard</option>
+                    <option value="xbox">XBox gamepad</option>
+                    <option value="playstation">PSX gamepad</option>
+                </select>
+                
+                <ul id="control-list">
+                    
                 </ul>
             </div>
             <div id="playfield">

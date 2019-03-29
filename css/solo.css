@@ -24,7 +24,7 @@ div#playfield{
     list-style: none;
 }
 #stats > li{
-    margin-bottom: 1.5em;
+    margin-bottom: 0.5em;
 }
 .stats-value{
     text-align: right;
