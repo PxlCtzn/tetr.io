@@ -51,8 +51,8 @@ class Playfield {
     {
         let rowCount = 0;
 
-        outer: for (let y = this.matrix.length - 1; y > 0; --y) {
-            for (let x = 0; x < this.matrix[y].length; ++x) {
+        outer: for (let y = this.row - 1; y > 0; --y) {
+            for (let x = 0; x < this.column; ++x) {
                 if (this.matrix[y][x] === 0) {
                     continue outer;
                 }
