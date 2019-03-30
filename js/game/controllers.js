@@ -5,6 +5,7 @@ function getKey(control_type, key_id)
         return configKeyboard[key_id];
     }
 }
+
 updateControlsDisplay = (control_type) => {
     let controls = [
         {
@@ -61,15 +62,8 @@ document.getElementById("controller-select").addEventListener('change', (event) 
     updateControlsDisplay(event.target[event.target.selectedIndex].value);
 });
 
-document.addEventListener('keydown', function(event)
-{
-    console.log("Keydown : '"+event.key+"'");
-    console.log(getIcon(event.key));
-});
-
 function getIcon(key)
 {
-    console.log("Getting icon for : "+key);
     if(key === " ")
     {
         key = "Space";
@@ -92,7 +86,7 @@ const keyListener = (event) => {
     {
         game.movePieceRight();
     }
-    else if(configKeyboard.DOWN === event.key)
+    else if(configKeyboard.SOFT_DROP === event.key)
     {
         if (event.preventDefault)
             event.preventDefault();
