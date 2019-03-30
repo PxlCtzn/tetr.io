@@ -77,7 +77,8 @@ function getIcon(key)
 updateControlsDisplay('keyboard');
 
 const keyListener = (event) => {
-    event.preventDefault();
+    if (event.preventDefault)
+        event.preventDefault();
     if(configKeyboard.LEFT === event.key)
     {
         game.movePieceLeft();
@@ -88,10 +89,11 @@ const keyListener = (event) => {
     }
     else if(configKeyboard.SOFT_DROP === event.key)
     {
-        if (event.preventDefault)
-            event.preventDefault();
-
-        game.dropPiece();
+        game.softDrop();
+    }
+    else if(configKeyboard.HARD_DROP === event.key)
+    {
+        game.hardDrop();
     }
     else if(configKeyboard.HOLD === event.key)
     {

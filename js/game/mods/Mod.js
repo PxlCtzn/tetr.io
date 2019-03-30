@@ -6,6 +6,7 @@ class Mod{
             level : 1,
             speed: 0,
             lines : 0,
+            total_lines : 0,
             timer : 0,
         };
         
@@ -18,6 +19,10 @@ class Mod{
         this.playfield = new Playfield(10, 20);
         this.styles = new PlayfieldStyle();
         
+        // Soft drop stack : The number of line the player soft drop the current piece.
+        // Reset when a new piece is spawn.
+        this.softDropStack = 0;
+
         this.randomizer = new BagRandomizer(this.tetrominos_available, 1);
         this.previewCount = 5;
         this.tetrominos_queue = Array(this.previewCount);
@@ -91,25 +96,62 @@ class Mod{
         this.__updateGhost();
     }
 
-    dropPiece(){
-        var lineCleared = 0;
-        this.dropCounter = 0;
+    softDrop()
+    {
+        this.softDropStack++;
+        this.softDropStack = this.dropPiece() ? this.softDropStack : this.softDropStack + 1;
+    }
 
+    hardDrop()
+    {
+        this.stats.score += 2 * (this.ghost.pos.y - this.tetromino.pos.y);
+        this.tetromino.pos.y = this.ghost.pos.y;
+        this.lockPiece(); 
+    }
+
+    lockPiece()
+    {
+        this.playfield.merge(this.tetromino);
+        
+        var lineCleared = 0;
+
+        lineCleared = this.playfield.sweep();
+
+        this.stats.total_lines += lineCleared;
+        this.stats.lines += lineCleared;
+
+        if(this.isGoalReached())
+        {
+            this.stats.level++;
+            this.__computeSpeed();
+            this.stats.lines = this.stats.lines - this.getGoal();
+        }
+
+        if(lineCleared > 0)
+        {
+            this.stats.score += this.scores_tab[lineCleared]*this.stats.level;
+        }
+
+        this.spawnNextTetromino();
+    }
+
+    isGoalReached()
+    {
+        return (this.stats.lines >= this.getGoal());
+    }
+
+    dropPiece()
+    {
+        this.dropCounter = 0;
         this.tetromino.pos.y++;
 
         if(this.playfield.collide(this.tetromino))
         {
             this.tetromino.pos.y--;
-            this.playfield.merge(this.tetromino);
-            this.spawnNextTetromino();
-            lineCleared = this.playfield.sweep();
-            this.stats.lines += lineCleared;
-            if(lineCleared > 0)
-            {
-                this.stats.score += this.scores_tab[lineCleared]*this.stats.level;
-            }
+            this.lockPiece();
+            return true;
         }
-        
+        return false;
     }
 
     holdPiece(){
@@ -126,11 +168,13 @@ class Mod{
         else
         {
             [this.hold, this.tetromino] = [this.tetromino, this.hold];
-            this.tetromino.pos = this.hold.pos;
+            this.centerTetromino();
+            this.tetromino.pos.y = 0;
         }
         this.canHold = false;
         this.__updateHold();
     }
+
     rotatePieceClockwise()
     {
         this.tetromino.rotateClockwise();
@@ -147,6 +191,8 @@ class Mod{
      */
     spawnNextTetromino()
     {       
+        this.stats.score += this.softDropStack;
+        this.softDropStack = 0;
         this.tetromino = this.tetrominos_queue.shift();
         this.tetrominos_queue.push(this.randomizer.getPiece());
         this.centerTetromino();

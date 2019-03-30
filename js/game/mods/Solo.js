@@ -15,7 +15,6 @@ class SoloMod extends Mod{
 
             if(this.dropCounter >= this.stats.speed)
             {
-                
                 super.dropPiece();
             }
 
@@ -25,6 +24,7 @@ class SoloMod extends Mod{
             this.__updateScore().__updateLevel().__updateSpeed().__updateStatLine();
             this.__updateTimer();
             this.__updateGhost();
+            this.__updateGoal();
 
             requestAnimationFrame(__loop);
             
@@ -49,7 +49,12 @@ class SoloMod extends Mod{
     }
     
     __updateStatLine(){
-        document.querySelector("#stats-line--value").textContent = this.stats.lines;
+        document.querySelector("#stats-line--value").textContent = this.stats.total_lines;
+        return this;
+    }
+
+    __updateGoal(){
+        document.querySelector("#stats-goal--value").textContent = this.stats.lines +" / "+this.getGoal();
         return this;
     }
 
@@ -108,4 +113,8 @@ class SoloMod extends Mod{
         super.__drawMatrix(this.context, this.ghost.matrix, this.ghost.pos, false, 0.2);
     }
 
+    getGoal(fixedGoalSystem = true)
+    {
+        return fixedGoalSystem ? 10 : this.level * 5;
+    }
 }

@@ -10,9 +10,9 @@
 - [ ] Lock Mechanism
 - [X] Ghost
 - [ ] Combo
-- [ ] Level up
+- [X] Level up
 - [ ] Point
-- [ ] Speed 
+- [X] Speed 
 - [ ] Pause
 - [X] Hold
 - [ ] Scoring
