@@ -101,7 +101,7 @@ const keyListener = (event) => {
     }
     else if(configKeyboard.PAUSE === event.key)
     {
-        game.pause();
+        game.pauseGame();
     }
     else if(configKeyboard.ROTATE_CLOCKWISE === event.key)
     {

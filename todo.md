@@ -13,11 +13,12 @@
 - [X] Level up
 - [ ] Point
 - [X] Speed 
-- [ ] Pause
+- [X] Pause
 - [X] Hold
 - [ ] Scoring
 - [X] Display timer
-
+- [ ] Game Over
 ## Solo Mod
 
 ## Multiplayer Mod
+ 

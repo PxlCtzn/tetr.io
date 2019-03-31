@@ -7,25 +7,27 @@ class SoloMod extends Mod{
         this.dropCounter = 0;
 
         const __loop = (time = 0) => {
-            const deltaTime = time - this.lastTime;
+            if(!this.pause){
+                const deltaTime = time - this.lastTime;
 
-            this.dropCounter += deltaTime;
-            
-            this.stats.timer += deltaTime;
+                this.dropCounter += deltaTime;
+                
+                
+                    this.stats.timer += deltaTime;
 
-            if(this.dropCounter >= this.stats.speed)
-            {
-                super.dropPiece();
+                if(this.dropCounter >= this.stats.speed)
+                {
+                    super.dropPiece();
+                }
+
+                this.lastTime = time;
+                
+                this.__draw();
+                this.__updateScore().__updateLevel().__updateSpeed().__updateStatLine();
+                this.__updateTimer();
+                this.__updateGhost();
+                this.__updateGoal();
             }
-
-            this.lastTime = time;
-            
-            this.__draw();
-            this.__updateScore().__updateLevel().__updateSpeed().__updateStatLine();
-            this.__updateTimer();
-            this.__updateGhost();
-            this.__updateGoal();
-
             requestAnimationFrame(__loop);
             
         };

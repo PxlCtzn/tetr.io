@@ -9,7 +9,7 @@ class Mod{
             total_lines : 0,
             timer : 0,
         };
-        
+        this.pause = false;
         this.__computeSpeed();
 
         this.canvas = canvas;
@@ -239,4 +239,8 @@ class Mod{
         this.ghost.pos.y--;
     }
 
+    pauseGame()
+    {
+        this.pause = this.pause ? false : true ;
+    }
 }
