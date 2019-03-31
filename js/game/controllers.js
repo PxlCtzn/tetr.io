@@ -114,3 +114,10 @@ const keyListener = (event) => {
 };
 
 document.addEventListener('keydown', keyListener);
+document.addEventListener('blur', (event) => { 
+    game.forcePause();
+})
+
+document.addEventListener('focusout', (event) => { 
+    game.forcePause();
+})

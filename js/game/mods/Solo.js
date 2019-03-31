@@ -27,6 +27,8 @@ class SoloMod extends Mod{
                 this.__updateTimer();
                 this.__updateGhost();
                 this.__updateGoal();
+            }else{
+                this.__hide(); // Should be something like this.playfield.hide();
             }
             requestAnimationFrame(__loop);
             
@@ -89,6 +91,7 @@ class SoloMod extends Mod{
     {
         let canvas = document.getElementById("hold");
         let context = canvas.getContext("2d");
+
         context.clearRect(0, 0, canvas.width, canvas.height);
         super.__drawMatrix(context, this.hold.matrix, {x:0, y:0}, false);
     }
@@ -115,6 +118,20 @@ class SoloMod extends Mod{
         super.__drawMatrix(this.context, this.ghost.matrix, this.ghost.pos, false, 0.2);
     }
 
+    __hide(){
+        this.context.fillStyle = this.styles.backgroundColor;
+        this.context.fillRect(0, 0, // (X, Y) Origin
+            this.playfield.column      * this.styles.cellSize, // Width
+            this.playfield.row   * this.styles.cellSize  // Height
+        );
+        this.context.font = '30px monospace';
+        this.context.fillStyle = "white";
+        this.context.fillText("PAUSE", (this.canvas.width-30*3)/2, (this.canvas.height-15)/2);
+        this.context.font = '15px monospace';
+        let message = "Press '"+configKeyboard.PAUSE+"' to resume the game";
+        this.context.fillText(message, (this.canvas.width-30*(message.length/3.35))/2, this.canvas.height/2+30); 
+
+    }
     getGoal(fixedGoalSystem = true)
     {
         return fixedGoalSystem ? 10 : this.level * 5;

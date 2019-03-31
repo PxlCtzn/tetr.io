@@ -243,4 +243,10 @@ class Mod{
     {
         this.pause = this.pause ? false : true ;
     }
+
+    forcePause()
+    {
+        this.pause = true ;
+        
+    }
 }

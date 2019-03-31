@@ -12,8 +12,13 @@ div#content-left, div#content-right{
     flex: 0.2;
 }
 
-div#playfield{
+#playfield{
     flex: 0.8;
+    display:flex;
+}
+#playfield--left > h3 {
+    text-align: center;
+    color: #7ed56e;
 }
 #playfield--canvas {
     display: block;
@@ -34,6 +39,7 @@ div#playfield{
 
 .stats-label{
     font-weight: bold;
+    text-align: left!important;
 }
 
 #preview-queue {
