@@ -1,7 +1,7 @@
 class Mod{
-
-    constructor(canvas){
-        this.stats = {
+    constructor(canvas)
+    {
+        this.stats = {
             score : 0,
             level : 1,
             speed: 0,

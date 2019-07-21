@@ -6,6 +6,7 @@ div#content{
     display:flex;
     flex-direction: row;
     width: 100%;
+    min-height: 100vh;
 }
 
 div#content-left, div#content-right{
